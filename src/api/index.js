@@ -17,7 +17,7 @@ const options = {
 
    
 
-const getPlacesData = async () => {
+export const getPlacesData = async () => {
   try {
     // request
     const { data: { data }} = await axios.get(URL, options);
