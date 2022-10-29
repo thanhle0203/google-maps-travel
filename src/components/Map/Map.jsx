@@ -1,33 +1,44 @@
 import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import { Paper, Typography, useMediaQuery } from '@material-ui/core'
-import LocationOnOutlined from '@material-ui/icons/LocationOnOutlined';
-import { Rating } from '@material-ui/lab';
+import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import Rating from '@material-ui/lab/Rating';
 
-import useStyles from './styles';
+import useStyles from './styles.js';
 
-const Map = () => {
+const AnyReactComponent = ({ text }) => <div>{text}</div>
+
+const Map = ({ setCoordinates, setBounds, coordinates }) => {
   const classes = useStyles();
   const isMobile = useMediaQuery('(min-width:600px)');
 
-  const coordinates = { lat: 0, lng: 0 };
 
   return (
-    <div className={classes.mapContainer}>
+    <div className={classes.mapContainer}> 
+     
       <GoogleMapReact
         bootstrapURLKeys={{ key: 'AIzaSyAUsqRJLfm1mLBmnArlBycIimxdJvKzEWQ' }}
         defaultCenter={coordinates}
         center={coordinates}
         defaultZoom={14}
         margin={[50, 50, 50, 50]}
-        options={''}
-        onChange={''}
+        options={{ disableDefaultUI: true, zoomControl: true }}
+        onChange={(e) => {
+          setCoordinates({ lat: e.center.lat, lng: e.center.lng });
+          setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
+        }}
         onChildClick={''}
       >
+      
+      <AnyReactComponent
+        lat={59.955413}
+        lng={30.337844}
+        text='My Marker'
+       />
 
       </GoogleMapReact>
     </div>
-  )
-}
+  );
+};
 
-export default Map
+export default Map;

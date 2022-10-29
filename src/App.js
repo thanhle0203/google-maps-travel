@@ -9,26 +9,41 @@ import Map from './components/Map/Map'
 const App = () => {
 
   const [places, setPlaces] = useState([]);
+
+  const [coordinates, setCoordinates] = useState({});
+  const [bounds, setBounds] = useState(null);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude }}) => {
+      setCoordinates({ lat: latitude, lng: longitude });
+    });
+  }, []);
  
   useEffect(() => {
+    console.log(coordinates, bounds);
+
     getPlacesData()
       .then((data) => {
         console.log(data);
-        
+
         setPlaces(data);
       })
-  }, []);
+  }, [coordinates, bounds]);
 
   return (
     <>
       <CssBaseline />
       <Header />
       <Grid container spacing={3} style={{ width: '100%' }}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
           <List />
         </Grid>
         <Grid item xs={12} md={8}>
-          {/* <Map /> */}
+          <Map 
+            setCoordinates={setCoordinates}
+            setBounds={setBounds}
+            coordinates={coordinates}
+          />
         </Grid>
         
 
