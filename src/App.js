@@ -39,13 +39,13 @@ const App = () => {
           <List places={places} />
         </Grid>
         <Grid item xs={12} md={8}>
-          {/*
+          
           <Map 
             setCoordinates={setCoordinates}
             setBounds={setBounds}
             coordinates={coordinates}
           />
-        */}
+        
         </Grid>
         
 

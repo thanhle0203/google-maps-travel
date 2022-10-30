@@ -6,7 +6,7 @@ import Rating from '@material-ui/lab/Rating';
 
 import useStyles from './styles.js';
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>
+
 
 const Map = ({ setCoordinates, setBounds, coordinates }) => {
   const classes = useStyles();
@@ -30,11 +30,7 @@ const Map = ({ setCoordinates, setBounds, coordinates }) => {
         onChildClick={''}
       >
       
-      <AnyReactComponent
-        lat={59.955413}
-        lng={30.337844}
-        text='My Marker'
-       />
+      
 
       </GoogleMapReact>
     </div>
