@@ -10,6 +10,7 @@ const App = () => {
 
   const [places, setPlaces] = useState([]);
   const [childClicked, setChildClicked] = useState(null);
+  const [filteredPlaces, setFilteredPlaces] = useState([]);
 
   const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0});
   const [bounds, setBounds] = useState({});
@@ -23,6 +24,12 @@ const App = () => {
       setCoordinates({ lat: latitude, lng: longitude });
     });
   }, []);
+
+  useEffect(() => {
+    const filteredPlaces = places.filter((place) => place.rating > rating )
+
+    setFilteredPlaces(filteredPlaces);
+  }, [rating]);
  
   useEffect(() => {
     setIsLoading(true);
@@ -30,6 +37,7 @@ const App = () => {
     getPlacesData(type, bounds.sw, bounds.ne)
       .then((data) => {
         setPlaces(data);
+        setFilteredPlaces([]);
         setIsLoading(false);
       })
   }, [type, coordinates, bounds]);
@@ -41,7 +49,7 @@ const App = () => {
       <Grid container spacing={3} style={{ width: '100%' }}>
         <Grid item xs={12} md={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
           <List 
-            places={places}
+            places={ filteredPlaces.length ? filteredPlaces : places}
             childClicked={childClicked}
             isLoading={isLoading}
             type={type}
@@ -55,7 +63,7 @@ const App = () => {
             setCoordinates={setCoordinates}
             setBounds={setBounds}
             coordinates={coordinates}
-            places={places}
+            places={ filteredPlaces.length ? filteredPlaces : places}
             setChildClicked={setChildClicked}
           />
         
