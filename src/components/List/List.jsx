@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, createRef } from 'react'
 import { CircularProgress, Grid, Typography, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core'
 
 import PlaceDetails from '../PlaceDetails/PlaceDetails'
@@ -9,7 +9,12 @@ const List = ({ places, childClicked }) => {
   const [type, setType] = useState('restaurants');
   const [rating, setRating] = useState('');
 
-  console.log({ childClicked });
+  const [elRefs, setElRefs] = useState([]);
+
+  useEffect(() => {
+    const refs = Array(places.length).fill().map((_, i) => refs[i] || createRef());
+    setElRefs(refs);
+  }, [places]);
 
 
   return (
@@ -36,8 +41,12 @@ const List = ({ places, childClicked }) => {
 
       <Grid container spacing={3} className={classes.list}>
         {places?.map((place, i) => (
-          <Grid item key={i} sx={12}>
-            <PlaceDetails place={place} />
+          <Grid ref={elRefs[i]} item key={i} sx={12}>
+            <PlaceDetails 
+              place={place} 
+              selected={Number(childClicked) === i}
+              refProp={elRefs[i]}
+            />
           </Grid>
         ))}
       </Grid>
