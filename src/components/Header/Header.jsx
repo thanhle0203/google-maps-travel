@@ -7,6 +7,9 @@ import useStyles from './styles'
 
 const Header = () => {
   const classes = useStyles();
+  const [autocomplete, setAutocomplete] = useState(null);
+
+  const onLoad = (autoC) => setAutocomplete(autoC);
 
   return (
     <AppBar position='static'>
@@ -18,14 +21,14 @@ const Header = () => {
           <Typography variant='h6' className={classes.title}>
             Explore new places
           </Typography> 
-          {/* <Autocomplete> */}
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
+            <Autocomplete onLoad={} onPlaceChanged={}> 
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase placeholder="Search..." classes={{ root: classes.inputRoot, input: classes.input}} />
               </div>
-              <InputBase placeholder="Search..." classes={{ root: classes.inputRoot, input: classes.input}} />
-            </div>
-          {/* </Autocomplete> */}
+            </Autocomplete> 
         </Box>
       </Toolbar>
     </AppBar>
