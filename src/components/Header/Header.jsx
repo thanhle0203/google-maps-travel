@@ -11,6 +11,10 @@ const Header = () => {
 
   const onLoad = (autoC) => setAutocomplete(autoC);
 
+  const onPlaceChanged = () => {
+    const lat = autocomplete.getPlace().geometry.location.lat();
+  }
+
   return (
     <AppBar position='static'>
       <Toolbar className={classes.toolbar}>
