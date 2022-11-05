@@ -32,15 +32,19 @@ const App = () => {
   }, [rating]);
  
   useEffect(() => {
-    setIsLoading(true);
+    if(bounds.sw && bounds.ne) {
+      setIsLoading(true);
+      getPlacesData(type, bounds.sw, bounds.ne)
+        .then((data) => {
+          setPlaces(data?.filter((place) => place.name && place.num_reviews > 0));
+          setFilteredPlaces([]);
+          setIsLoading(false);
+        })
+    }
+  }, [type, bounds]);
 
-    getPlacesData(type, bounds.sw, bounds.ne)
-      .then((data) => {
-        setPlaces(data);
-        setFilteredPlaces([]);
-        setIsLoading(false);
-      })
-  }, [type, coordinates, bounds]);
+  console.log(places)
+  console.log(filteredPlaces)
 
   return (
     <>
@@ -60,11 +64,12 @@ const App = () => {
         </Grid>
         <Grid item xs={12} md={8}>
           <Map 
+            setChildClicked={setChildClicked}
             setCoordinates={setCoordinates}
             setBounds={setBounds}
             coordinates={coordinates}
             places={ filteredPlaces.length ? filteredPlaces : places}
-            setChildClicked={setChildClicked}
+            
           />
         
         </Grid>
